@@ -1,4 +1,4 @@
-  {
+[  {
     "type": "stack",
     "title": "Portainer Agent",
     "description": "Manage all the resources in your Swarm cluster",
@@ -11,3 +11,4 @@
       "stackfile": "stacks/portainer-agent/docker-stack.yml"
     }
   }
+]
