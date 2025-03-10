@@ -1,0 +1,221 @@
+services:
+  radarr:
+    image: lscr.io/linuxserver/radarr:latest #ghcr.io/hotio/radarr
+    networks:
+      - proxy
+    container_name: radarr
+    hostname: radarr
+    dns:
+      - 8.8.8.8
+    volumes:
+      - /etc/pknw1/config/radarr:/config
+      - /dev/fuse:/dev/fuse
+      - /media:/media
+      - /downloads:/downloads
+      - /downloads:/download
+    environment:
+      - APP_GROUP=Requests
+      - APP_LOGO=https://static-00.iconduck.com/assets.00/radarr-icon-231x256-t45eodqo.png
+      - VIRTUAL_HOST=radarr.admin.pknw1.co.uk
+      - VIRTUAL_PORT=7878
+      - PUID=666
+      - PGID=666
+    labels:
+      - com.centurylinklabs.watchtower.enable=true
+  sonarr:
+    image: lscr.io/linuxserver/sonarr:latest
+    container_name: sonarr
+    networks:
+      - proxy
+    hostname: sonarr
+    dns:
+      - 8.8.8.8
+      - 172.22.20.1
+    volumes:
+      - /etc/pknw1/config/sonarr:/config
+      - /media:/media
+      - /downloads:/downloads
+      - /downloads:/download
+    environment:
+      - PUID=666
+      - PGID=666
+      - APP_GROUP=Requests
+      - APP_LOGO=https://res.cloudinary.com/razordarkamg/image/upload/v1621212884/SonarrV3_pufacd.png
+      - VIRTUAL_HOST=sonarr.admin.pknw1.co.uk
+      - VIRTUAL_PORT=8989
+    labels:
+      - com.centurylinklabs.watchtower.enable=true
+    deploy:
+      resources:
+        limits:
+          memory: 400M
+  prowlarr:
+    image: lscr.io/linuxserver/prowlarr:latest
+    container_name: prowlarr
+    networks:
+      - proxy
+    dns:
+      - 8.8.8.8
+    hostname: prowlarr
+    volumes:
+      - /etc/pknw1/config/prowlarr:/config
+      - /media:/media
+      - /downloads:/downloads
+      - /downloads:/download
+    environment:
+      - HTTP_PROXY=http://100.100.69.69:3128
+      - APP_GROUP=Requests
+      - APP_LOGO=https://static-00.iconduck.com/assets.00/prowlarr-icon-2048x2048-2pxvehfe.png
+      - VIRTUAL_HOST=prowlarr.admin.pknw1.co.uk
+      - VIRTUAL_PORT=9696
+    labels:
+      - com.centurylinklabs.watchtower.enable=true
+  flaresolverr:
+    image: ghcr.io/flaresolverr/flaresolverr:latest
+    container_name: flaresolverr
+    networks:
+      - proxy
+    hostname: flaresolverr
+    dns:
+      - 8.8.8.8
+    environment:
+      - LOG_LEVEL=info
+      - APP_GROUP=Content
+      - APP_LOGO=https://avatars.githubusercontent.com/u/75936191?s=400&v=4
+      - VIRTUAL_HOST=flaresolverr.admin.pknw1.co.uk
+      - VIRTUAL_PORT=8191
+    ports:
+      - 172.22.20.1:8191:8191
+    labels:
+      - com.centurylinklabs.watchtower.enable=true
+  overseerr:
+    image: lscr.io/linuxserver/overseerr:latest
+    container_name: overseerr
+    hostname: overseerr
+    networks:
+      - proxy
+    user: 666:666
+    dns:
+      - 8.8.8.8
+    environment:
+      - TZ=Etc/UTC
+      - VIRTUAL_HOST=requests.pknw1.co.uk
+      - VIRTUAL_PORT=5055
+    volumes:
+      - /etc/pknw1/config/overseerr:/config
+      - /etc/pknw1/config/overseerr/logo_full.svg:/app/overseerr/public/logo_full.svg
+      - /etc/pknw1/config/overseerr/logo_full.svg:/app/overseerr/public/logo_stacked.svg
+      - /media:/media
+      - /dev/fuse:/dev/fuse
+    labels:
+      - com.centurylinklabs.watchtower.enable=true
+  utorrent:
+    image: lscr.io/linuxserver/qbittorrent:latest
+    container_name: utorrent
+    networks:
+      - proxy
+    hostname: utorrent
+    dns:
+      - 172.22.20.1
+      - 8.8.8.8
+    ports:
+      - 172.22.20.1:8080:8080
+    volumes:
+      - /etc/pknw1/config/utorrent:/config
+      - /downloads:/downloads
+      - /downloads:/download
+    environment:
+      - PUID=666
+      - PGID=666
+      - APP_GROUP=Content
+      - APP_LOGO=https://iconape.com/wp-content/files/zo/346429/png/346429.png
+      - VIRTUAL_HOST=ut.admin.pknw1.co.uk,utorrent.admin.pknw1.co.uk
+      - VIRTUAL_PORT=8080
+      - DOCKER_MODS=ntoporcov/iQbit #marzzzello/linuxserver-io-mod-qbit-matui
+    labels:
+      - com.centurylinklabs.watchtower.enable=true
+    deploy:
+      resources:
+        limits:
+          memory: 400M
+  iqbit:
+    image: durianice/iqbit:latest
+    container_name: iqbit
+    restart: unless-stopped
+    networks:
+      proxy: null
+    environment:
+      - QBIT_HOST=http://utorrent:8080
+      - VIRTUAL_HOST=qb.admin.pknw1.co.uk
+      - VIRTUAL_PORT=8081
+      - STANDALONE_SERVER_PORT=8081
+    labels:
+      - com.centurylinklabs.watchtower.enable=true
+
+  channeltube-tailscale:
+    image: pknw1/channeltube-tailscale:v1
+    hostname: channeltube-tailscale
+    container_name: channeltube-tailscale
+    environment:
+      - HTTP_PROXY=http://100.100.69.69:3128
+      - TS_AUTHKEY=tskey-auth-kDLqbPtX5711CNTRL-fMZ85s1eHAC8DhFXWtnWACwvKqsT7PSM
+      - TS_STATE_DIR=/var/lib/tailscale
+      - TS_USERSPACE=false
+      - TS_ENABLE_METRICS=true
+      - VIRTUAL_HOST=channeltube.admin.pknw1.co.uk
+      - VIRTUAL_PORT=5000
+      - video_format_id=135
+      - audio_format_id=140
+    volumes:
+      - /etc/pknw1/config/channeltube/tailscale/state:/var/lib/tailscale
+      - /etc/pknw1/config/channeltube/channeltube:/channeltube/config
+      - /media/youtube:/channeltube/downloads
+    devices:
+      - /dev/net/tun:/dev/net/tun
+    cap_add:
+      - net_admin
+    networks:
+      - admin
+    dns:
+      - 8.8.8.8
+    restart: unless-stopped
+
+  metube-tailscale:
+    image: pknw1/metube-tailscale
+    hostname: metube-tailscale
+    container_name: metube-tailscale
+    environment:
+      - HTTP_PROXY=http://100.100.69.69:3128
+      - TS_AUTHKEY=tskey-auth-kDLqbPtX5711CNTRL-fMZ85s1eHAC8DhFXWtnWACwvKqsT7PSM
+      - TS_STATE_DIR=/var/lib/tailscale
+      - TS_USERSPACE=false
+      - TS_ENABLE_METRICS=true
+      - APP_GROUP=Requests
+      - APP_LOGO=https://static-00.iconduck.com/assets.00/metube-icon-231x256-t45eodqo.png
+      - VIRTUAL_HOST=metube.admin.pknw1.co.uk
+      - OUTPUT_TEMPLATE=%(channel)s/%(title)s-(%(release_year)s)-[%(id)s].%(ext)s
+      - VIRTUAL_PORT=8081
+      - PUID=666
+      - PGID=666
+    volumes:
+      - /etc/pknw1/config/metube:/config
+      - /dev/fuse:/dev/fuse
+      - /media/youtube:/app/downloads
+      - ./config/tailscale/state:/var/lib/tailscale
+    devices:
+      - /dev/net/tun:/dev/net/tun
+    cap_add:
+      - net_admin
+    networks:
+      - proxy
+    dns:
+      - 8.8.8.8
+    restart: unless-stopped
+    labels:
+      - com.centurylinklabs.watchtower.enable=true
+
+networks:
+  proxy:
+    external: true
+  admin:
+    external: true
