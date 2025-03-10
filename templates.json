@@ -2,7 +2,7 @@
   "version": "3",
   "templates": [
     {
-      "id": 23,
+      "id": 1,
       "type": 2,
       "title": "Notflix Cluster",
       "description": "Open-source in-memory data structure store - Cluster mode",
@@ -25,7 +25,7 @@
       ]
     },
     {
-      "id": 24,
+      "id": 2,
       "type": 1,
       "title": "RabbitMQ",
       "description": "Highly reliable enterprise messaging system",
