@@ -2,6 +2,404 @@
   "version": "3",
   "templates": [
     {
+      "id": 1,
+      "type": 1,
+      "title": "Registry",
+      "description": "Docker image registry",
+      "categories": ["docker"],
+      "platform": "linux",
+      "logo": "https://portainer-io-assets.sfo2.digitaloceanspaces.com/logos/registry.png",
+      "image": "registry:latest",
+      "ports": ["5000/tcp"],
+      "volumes": [
+        {
+          "container": "/var/lib/registry"
+        }
+      ]
+    },
+    {
+      "id": 2,
+      "type": 1,
+      "title": "Registry (cache)",
+      "description": "Docker image registry configured as a DockerHub pull through cache",
+      "categories": ["docker"],
+      "platform": "linux",
+      "logo": "https://portainer-io-assets.sfo2.digitaloceanspaces.com/logos/registry.png",
+      "image": "registry:latest",
+      "ports": ["5000/tcp"],
+      "volumes": [
+        {
+          "container": "/var/lib/registry"
+        }
+      ],
+      "env": [
+        {
+          "name": "REGISTRY_PROXY_REMOTEURL",
+          "default": "https://registry-1.docker.io",
+          "preset": true
+        }
+      ]
+    },
+    {
+      "id": 3,
+      "type": 1,
+      "title": "Ubuntu",
+      "description": "Debian-based Linux operating system",
+      "categories": ["operating-system"],
+      "platform": "linux",
+      "logo": "https://portainer-io-assets.sfo2.digitaloceanspaces.com/logos/ubuntu.png",
+      "image": "ubuntu:latest",
+      "interactive": true,
+      "command": "/bin/bash"
+    },
+    {
+      "id": 4,
+      "type": 1,
+      "title": "NodeJS",
+      "description": "JavaScript-based platform for server-side and networking applications",
+      "categories": ["development"],
+      "platform": "linux",
+      "logo": "https://portainer-io-assets.sfo2.digitaloceanspaces.com/logos/node.png",
+      "image": "node:latest",
+      "interactive": true,
+      "command": "/bin/bash"
+    },
+    {
+      "id": 5,
+      "type": 1,
+      "title": "Nginx",
+      "description": "High performance web server",
+      "categories": ["webserver"],
+      "platform": "linux",
+      "logo": "https://portainer-io-assets.sfo2.digitaloceanspaces.com/logos/nginx.png",
+      "image": "nginx:latest",
+      "ports": ["80/tcp", "443/tcp"],
+      "volumes": [
+        {
+          "container": "/etc/nginx"
+        },
+        {
+          "container": "/usr/share/nginx/html"
+        }
+      ]
+    },
+    {
+      "id": 6,
+      "type": 1,
+      "title": "Httpd",
+      "description": "Open-source HTTP server",
+      "categories": ["webserver"],
+      "platform": "linux",
+      "logo": "https://portainer-io-assets.sfo2.digitaloceanspaces.com/logos/httpd.png",
+      "image": "httpd:latest",
+      "ports": ["80/tcp"],
+      "volumes": [
+        {
+          "container": "/usr/local/apache2/htdocs/"
+        }
+      ]
+    },
+    {
+      "id": 7,
+      "type": 1,
+      "title": "Caddy",
+      "description": "Open-source web server with automatic HTTPS written in Go",
+      "categories": ["webserver"],
+      "platform": "linux",
+      "logo": "https://portainer-io-assets.sfo2.digitaloceanspaces.com/logos/caddy.png",
+      "image": "caddy:latest",
+      "ports": ["80/tcp"],
+      "volumes": [
+        {
+          "container": "/data"
+        }
+      ]
+    },
+    {
+      "id": 8,
+      "type": 1,
+      "title": "MySQL",
+      "description": "The most popular open-source database",
+      "categories": ["database"],
+      "platform": "linux",
+      "logo": "https://portainer-io-assets.sfo2.digitaloceanspaces.com/logos/mysql.png",
+      "image": "mysql/mysql-server:5.7",
+      "env": [
+        {
+          "name": "MYSQL_ROOT_PASSWORD",
+          "label": "Root password"
+        },
+        {
+          "name": "MYSQL_ROOT_HOST",
+          "default": "%",
+          "preset": true
+        }
+      ],
+      "ports": ["3306/tcp"],
+      "volumes": [
+        {
+          "container": "/var/lib/mysql"
+        }
+      ]
+    },
+    {
+      "id": 9,
+      "type": 1,
+      "title": "MariaDB",
+      "description": "Performance beyond MySQL",
+      "categories": ["database"],
+      "platform": "linux",
+      "logo": "https://portainer-io-assets.sfo2.digitaloceanspaces.com/logos/mariadb.png",
+      "image": "mariadb:latest",
+      "env": [
+        {
+          "name": "MYSQL_ROOT_PASSWORD",
+          "label": "Root password"
+        }
+      ],
+      "ports": ["3306/tcp"],
+      "volumes": [
+        {
+          "container": "/var/lib/mysql"
+        }
+      ]
+    },
+    {
+      "id": 10,
+      "type": 1,
+      "title": "PostgreSQL",
+      "description": "The most advanced open-source database",
+      "categories": ["database"],
+      "platform": "linux",
+      "logo": "https://portainer-io-assets.sfo2.digitaloceanspaces.com/logos/postgres.png",
+      "image": "postgres:latest",
+      "env": [
+        {
+          "name": "POSTGRES_USER",
+          "label": "Superuser"
+        },
+        {
+          "name": "POSTGRES_PASSWORD",
+          "label": "Superuser password"
+        }
+      ],
+      "ports": ["5432/tcp"],
+      "volumes": [
+        {
+          "container": "/var/lib/postgresql/data"
+        }
+      ]
+    },
+    {
+      "id": 11,
+      "type": 1,
+      "title": "Mongo",
+      "description": "Open-source document-oriented database",
+      "categories": ["database"],
+      "platform": "linux",
+      "logo": "https://portainer-io-assets.sfo2.digitaloceanspaces.com/logos/mongo.png",
+      "image": "mongo:latest",
+      "ports": ["27017/tcp"],
+      "volumes": [
+        {
+          "container": "/data/db"
+        }
+      ]
+    },
+    {
+      "id": 12,
+      "type": 1,
+      "title": "CrateDB",
+      "description": "An open-source distributed SQL database",
+      "categories": ["database"],
+      "platform": "linux",
+      "logo": "https://portainer-io-assets.sfo2.digitaloceanspaces.com/logos/cratedb.png",
+      "image": "crate:latest",
+      "ports": ["4200/tcp", "4300/tcp"],
+      "volumes": [
+        {
+          "container": "/data"
+        }
+      ]
+    },
+    {
+      "id": 13,
+      "type": 1,
+      "title": "Elasticsearch",
+      "description": "Open-source search and analytics engine",
+      "categories": ["database"],
+      "platform": "linux",
+      "logo": "https://portainer-io-assets.sfo2.digitaloceanspaces.com/logos/elasticsearch.png",
+      "image": "docker.elastic.co/elasticsearch/elasticsearch:7.15.1",
+      "ports": ["9200/tcp", "9300/tcp"],
+      "volumes": [
+        {
+          "container": "/usr/share/elasticsearch/data"
+        }
+      ]
+    },
+    {
+      "id": 14,
+      "type": 1,
+      "title": "GitLab CE",
+      "description": "Open-source end-to-end software development platform",
+      "note": "Default username is <b>root</b>. Check the <a href=\"https://docs.gitlab.com/ee/install/docker.html\" target=\"_blank\">GitLab documentation</a> to get started.",
+      "categories": ["development", "project-management"],
+      "platform": "linux",
+      "logo": "https://portainer-io-assets.sfo2.digitaloceanspaces.com/logos/gitlab_ce.png",
+      "image": "gitlab/gitlab-ce:latest",
+      "ports": ["80/tcp", "443/tcp", "22/tcp"],
+      "volumes": [
+        {
+          "container": "/etc/gitlab"
+        },
+        {
+          "container": "/var/log/gitlab"
+        },
+        {
+          "container": "/var/opt/gitlab"
+        }
+      ]
+    },
+    {
+      "id": 15,
+      "type": 1,
+      "title": "Minio",
+      "description": "A distributed object storage server built for cloud applications and devops",
+      "categories": ["storage"],
+      "platform": "linux",
+      "logo": "https://portainer-io-assets.sfo2.digitaloceanspaces.com/logos/minio.png",
+      "image": "quay.io/minio/minio:latest",
+      "ports": ["9000/tcp", "9001/tcp"],
+      "env": [
+        {
+          "name": "MINIO_ROOT_USER",
+          "label": "Root user"
+        },
+        {
+          "name": "MINIO_ROOT_PASSWORD",
+          "label": "Root password"
+        }
+      ],
+      "volumes": [
+        {
+          "container": "/data"
+        },
+        {
+          "container": "/root/.minio"
+        }
+      ],
+      "command": "server /data --console-address ':9001'"
+    },
+    {
+      "id": 16,
+      "type": 1,
+      "title": "Scality S3",
+      "description": "Standalone AWS S3 protocol server",
+      "categories": ["storage"],
+      "platform": "linux",
+      "logo": "https://portainer-io-assets.sfo2.digitaloceanspaces.com/logos/scality-s3.png",
+      "image": "scality/s3server",
+      "ports": ["8000/tcp"],
+      "env": [
+        {
+          "name": "SCALITY_ACCESS_KEY",
+          "label": "Scality S3 access key"
+        },
+        {
+          "name": "SCALITY_SECRET_KEY",
+          "label": "Scality S3 secret key"
+        }
+      ],
+      "volumes": [
+        {
+          "container": "/usr/src/app/localData"
+        },
+        {
+          "container": "/usr/src/app/localMetadata"
+        }
+      ]
+    },
+    {
+      "id": 17,
+      "type": 1,
+      "title": "SQL Server",
+      "description": "Microsoft SQL Server on Linux",
+      "categories": ["database"],
+      "platform": "linux",
+      "note": "Password needs to include at least 8 characters including uppercase, lowercase letters, base-10 digits and/or non-alphanumeric symbols.",
+      "logo": "https://portainer-io-assets.sfo2.digitaloceanspaces.com/logos/microsoft.png",
+      "image": "mcr.microsoft.com/mssql/server:2019-latest",
+      "ports": ["1433/tcp"],
+      "env": [
+        {
+          "name": "ACCEPT_EULA",
+          "default": "Y",
+          "preset": true
+        },
+        {
+          "name": "SA_PASSWORD",
+          "label": "SA password"
+        }
+      ]
+    },
+    {
+      "id": 18,
+      "type": 1,
+      "title": "SQL Server",
+      "description": "Microsoft SQL Server Developer for Windows containers",
+      "categories": ["database"],
+      "platform": "windows",
+      "note": "Password needs to include at least 8 characters including uppercase, lowercase letters, base-10 digits and/or non-alphanumeric symbols.",
+      "logo": "https://portainer-io-assets.sfo2.digitaloceanspaces.com/logos/microsoft.png",
+      "image": "microsoft/mssql-server-windows-developer:latest",
+      "ports": ["1433/tcp"],
+      "env": [
+        {
+          "name": "ACCEPT_EULA",
+          "default": "Y",
+          "preset": true
+        },
+        {
+          "name": "sa_password",
+          "label": "SA password"
+        }
+      ],
+      "volumes": [
+        {
+          "container": "C:/temp/"
+        }
+      ]
+    },
+    {
+      "id": 19,
+      "type": 1,
+      "title": "SQL Server Express",
+      "description": "Microsoft SQL Server Express for Windows containers",
+      "categories": ["database"],
+      "platform": "windows",
+      "note": "Password needs to include at least 8 characters including uppercase, lowercase letters, base-10 digits and/or non-alphanumeric symbols.",
+      "logo": "https://portainer-io-assets.sfo2.digitaloceanspaces.com/logos/microsoft.png",
+      "image": "microsoft/mssql-server-windows-express:latest",
+      "ports": ["1433/tcp"],
+      "env": [
+        {
+          "name": "ACCEPT_EULA",
+          "default": "Y",
+          "preset": true
+        },
+        {
+          "name": "sa_password",
+          "label": "SA password"
+        }
+      ],
+      "volumes": [
+        {
+          "container": "C:/temp/"
+        }
+      ]
+    },
+    {
       "id": 20,
       "type": 1,
       "title": "Solr",
@@ -31,7 +429,21 @@
         {
           "container": "/data"
         }
-      ],
+      ]
+    },
+    {
+      "id": 22,
+      "type": 2,
+      "title": "Swarm monitoring",
+      "description": "Monitor your cluster performances with Prometheus & Grafana",
+      "note": "Requires Docker version 19.03.0+. <b>Make sure to add the <code>monitoring == true</code> one of your Swarm manager node before deploying this stack.</b>",
+      "categories": ["Monitoring"],
+      "platform": "linux",
+      "logo": "https://portainer-io-assets.sfo2.digitaloceanspaces.com/logos/portainer.png",
+      "repository": {
+        "url": "https://github.com/portainer/templates",
+        "stackfile": "swarm/monitoring/docker-compose.yml"
+      },
       "env": [
         {
           "name": "GRAFANA_USER",
@@ -41,6 +453,243 @@
         {
           "name": "GRAFANA_PASSWORD",
           "label": "Grafana admin password"
+        }
+      ]
+    },
+    {
+      "id": 23,
+      "type": 2,
+      "title": "Notflix Cluster",
+      "description": "Open-source in-memory data structure store - Cluster mode",
+      "categories": ["database"],
+      "platform": "linux",
+      "logo": "https://portainer-io-assets.sfo2.digitaloceanspaces.com/logos/redis.png",
+      "repository": {
+        "url": "https://github.com/pknw1/portainer-templates-v3",
+        "stackfile": "stacks/notflix/docker-compose.yml"
+      },
+      "env": [
+        {
+          "name": "VIRTUAL_HOST",
+          "label": "Redis password"
+        },
+        {
+          "name": "VIRTUAL_PORT",
+          "label": "Redis password"
+        }
+      ]
+    },
+    {
+      "id": 24,
+      "type": 1,
+      "title": "RabbitMQ",
+      "description": "Highly reliable enterprise messaging system",
+      "categories": ["messaging"],
+      "platform": "linux",
+      "logo": "https://portainer-io-assets.sfo2.digitaloceanspaces.com/logos/rabbitmq.png",
+      "image": "rabbitmq:latest",
+      "ports": ["5671/tcp", "5672/tcp"],
+      "volumes": [
+        {
+          "container": "/var/lib/rabbitmq"
+        }
+      ]
+    },
+    {
+      "id": 25,
+      "type": 1,
+      "title": "Ghost",
+      "description": "Free and open-source blogging platform",
+      "categories": ["blog"],
+      "note": "Access the blog management interface under <code>/ghost/</code>.",
+      "platform": "linux",
+      "logo": "https://portainer-io-assets.sfo2.digitaloceanspaces.com/logos/ghost.png",
+      "image": "ghost:latest",
+      "ports": ["2368/tcp"],
+      "volumes": [
+        {
+          "container": "/var/lib/ghost/content"
+        }
+      ]
+    },
+    {
+      "id": 26,
+      "type": 1,
+      "title": "Joomla",
+      "description": "Another free and open-source CMS",
+      "categories": ["CMS"],
+      "platform": "linux",
+      "logo": "https://portainer-io-assets.sfo2.digitaloceanspaces.com/logos/joomla.png",
+      "image": "joomla:latest",
+      "env": [
+        {
+          "name": "JOOMLA_DB_HOST",
+          "label": "MySQL database host",
+          "type": "container"
+        },
+        {
+          "name": "JOOMLA_DB_PASSWORD",
+          "label": "Database password"
+        }
+      ],
+      "ports": ["80/tcp"],
+      "volumes": [
+        {
+          "container": "/var/www/html"
+        }
+      ]
+    },
+    {
+      "id": 27,
+      "type": 1,
+      "title": "Drupal",
+      "description": "Open-source content management framework",
+      "categories": ["CMS"],
+      "platform": "linux",
+      "logo": "https://portainer-io-assets.sfo2.digitaloceanspaces.com/logos/drupal.png",
+      "image": "drupal:latest",
+      "ports": ["80/tcp"],
+      "volumes": [
+        {
+          "container": "/var/www/html"
+        }
+      ]
+    },
+    {
+      "id": 28,
+      "type": 1,
+      "title": "Plone",
+      "description": "A free and open-source CMS built on top of Zope",
+      "note": "Default user and password are admin/admin",
+      "categories": ["CMS"],
+      "platform": "linux",
+      "logo": "https://portainer-io-assets.sfo2.digitaloceanspaces.com/logos/plone.png",
+      "image": "plone:latest",
+      "ports": ["8080/tcp"],
+      "volumes": [
+        {
+          "container": "/data"
+        }
+      ]
+    },
+    {
+      "id": 29,
+      "type": 1,
+      "title": "Sematext Docker Agent",
+      "description": "Collect logs, metrics and docker events",
+      "categories": ["Log Management", "Monitoring"],
+      "platform": "linux",
+      "logo": "https://portainer-io-assets.sfo2.digitaloceanspaces.com/logos/sematext_agent.png",
+      "image": "sematext/sematext-agent-docker:latest",
+      "name": "sematext-agent",
+      "privileged": true,
+      "env": [
+        {
+          "name": "LOGSENE_TOKEN",
+          "label": "Logs token"
+        },
+        {
+          "name": "SPM_TOKEN",
+          "label": "SPM monitoring token"
+        }
+      ],
+      "volumes": [
+        {
+          "container": "/var/run/docker.sock",
+          "bind": "/var/run/docker.sock"
+        }
+      ]
+    },
+    {
+      "id": 30,
+      "type": 1,
+      "title": "Datadog agent",
+      "description": "Collect events and metrics",
+      "categories": ["Monitoring"],
+      "platform": "linux",
+      "logo": "https://portainer-io-assets.sfo2.digitaloceanspaces.com/logos/datadog_agent.png",
+      "image": "datadog/agent:latest",
+      "env": [
+        {
+          "name": "DD_API_KEY",
+          "label": "Datadog API key"
+        }
+      ],
+      "volumes": [
+        {
+          "container": "/var/run/docker.sock",
+          "bind": "/var/run/docker.sock",
+          "readonly": true
+        },
+        {
+          "container": "/host/sys/fs/cgroup",
+          "bind": "/sys/fs/cgroup",
+          "readonly": true
+        },
+        {
+          "container": "/host/proc",
+          "bind": "/proc",
+          "readonly": true
+        }
+      ]
+    },
+    {
+      "id": 31,
+      "type": 1,
+      "title": "Mautic",
+      "description": "Open-source marketing automation platform",
+      "categories": ["marketing"],
+      "platform": "linux",
+      "logo": "https://portainer-io-assets.sfo2.digitaloceanspaces.com/logos/mautic.png",
+      "image": "mautic/mautic:latest",
+      "env": [
+        {
+          "name": "MAUTIC_DB_HOST",
+          "label": "MySQL database host",
+          "type": "container"
+        },
+        {
+          "name": "MAUTIC_DB_PASSWORD",
+          "label": "Database password"
+        }
+      ],
+      "ports": ["80/tcp"],
+      "volumes": [
+        {
+          "container": "/var/www/html"
+        }
+      ]
+    },
+    {
+      "id": 32,
+      "type": 1,
+      "title": "Jenkins",
+      "description": "Open-source continuous integration tool",
+      "categories": ["continuous-integration"],
+      "platform": "linux",
+      "logo": "https://portainer-io-assets.sfo2.digitaloceanspaces.com/logos/jenkins.png",
+      "image": "jenkins/jenkins:lts-jdk11",
+      "ports": ["8080/tcp", "50000/tcp"],
+      "volumes": [
+        {
+          "container": "/var/jenkins_home"
+        }
+      ]
+    },
+    {
+      "id": 33,
+      "type": 1,
+      "title": "Redmine",
+      "description": "Open-source project management tool",
+      "note": "Default user and password are admin/admin",
+      "categories": ["project-management"],
+      "platform": "linux",
+      "logo": "https://portainer-io-assets.sfo2.digitaloceanspaces.com/logos/redmine.png",
+      "image": "redmine:latest",
+      "ports": ["3000/tcp"],
+      "volumes": [
+        {
+          "container": "/usr/src/redmine/files"
         }
       ]
     },
@@ -860,6 +1509,19 @@
           ]
         }
       ]
+    },
+    {
+      "id": 69,
+      "type": 3,
+      "title": "Anyviz Cloud Adaptor",
+      "description": "The cloud adapter connects local devices via OPC-UA, Modbus, Siemens, Beckhoff ADS, EtherNet/IP, M-Bus and BACnet to the AnyViz Cloud.",
+      "categories": ["edge"],
+      "platform": "linux",
+      "logo": "https://portainer-io-assets.sfo2.cdn.digitaloceanspaces.com/logos/anyviz.png",
+      "repository": {
+        "url": "https://github.com/portainer/templates",
+        "stackfile": "edge/anyviz/docker-compose.yml"
+      }
     }
   ]
 }
