@@ -9,8 +9,10 @@
       "categories": ["docker"],
       "platform": "linux",
       "logo": "https://portainer-io-assets.sfo2.digitaloceanspaces.com/logos/registry.png",
-      "image": "registry:latest",
-      "ports": ["5000/tcp"],
+      "repository": {
+        "url": "https://github.com/portainer/templates",
+        "stackfile": "swarm/monitoring/docker-compose.yml"
+      },
       "volumes": [
         {
           "container": "/var/lib/registry"
